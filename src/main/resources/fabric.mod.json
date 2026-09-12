@@ -24,7 +24,7 @@
     ]
   },
   "mixins": [
-    "mixins.json"
+    "artifacts.mixins.json"
   ],
 
   "depends": {
