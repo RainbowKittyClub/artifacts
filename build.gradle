@@ -1,0 +1,165 @@
+plugins {
+	id 'base'
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+	id 'maven-publish'
+	id 'com.gradleup.shadow' version '9.6.1'
+}
+
+java.sourceCompatibility = JavaVersion.VERSION_25
+java.targetCompatibility = JavaVersion.VERSION_25
+
+base {
+	archivesName.set(project.mod_id)
+}
+
+version = project.mod_version
+group = project.maven_group
+
+// A dedicated source set keeps datagen's own imports out of this mod's jar. `client = false`: the
+// enchantment/tag/lang providers write raw JSON and extend FabricLanguageProvider — none touches a
+// client-only texture/model registry, so datagen runs on a server instance.
+fabricApi {
+	configureDataGeneration {
+		modId = project.mod_id
+		client = false
+		createSourceSet = true
+	}
+}
+
+repositories {
+	// rkcore is not published anywhere public; it comes from `publishToMavenLocal` in its checkout.
+	mavenLocal()
+	maven {
+		name = 'Nucleoid'
+		url = 'https://maven.nucleoid.xyz'
+	}
+}
+
+configurations {
+	rkcore
+	shade
+	implementation.extendsFrom shade
+}
+
+// Filter rkcore down to the shareable packages before shadowJar sees it, so its own feature
+// packages can never leak in and importing one fails to compile.
+tasks.register('rkcoreSharedJar', Jar) {
+	archiveBaseName = 'rkcore-shared'
+	destinationDirectory = layout.buildDirectory.dir('shade')
+	from({ configurations.rkcore.collect { zipTree(it) } }) {
+		include 'club/rainbowkitty/rkcore/common/item/**'
+		include 'club/rainbowkitty/rkcore/common/effect/**'
+		include 'club/rainbowkitty/rkcore/common/enchant/**'
+		include 'club/rainbowkitty/rkcore/common/death/**'
+	}
+}
+
+dependencies {
+	// To change the versions see the gradle.properties file
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	implementation "eu.pb4:polymer-bundled:${project.polymer_version}"
+	// Non-transitive: rkcore's POM lists all of fabric-api and Polymer, which this mod declares
+	// itself. Its common/item + common/effect helpers are shaded in (relocated) rather than
+	// depended on, so the mod still installs standalone. See companions/build.gradle.
+	rkcore("club.rainbowkitty.rkcore:rkcore:${project.rkcore_version}") { transitive = false }
+	shade files(tasks.named('rkcoreSharedJar'))
+}
+
+// runServer/stopServer lifecycle, sane-defaults seeding of run/, and the optional Quilt run — all
+// generic, all driven only by gradle.properties. Delete this line and gradle/devserver.gradle to
+// fall back to Loom's bare dev server.
+apply from: 'gradle/devserver.gradle'
+
+// The shaded jar is the one installed, so it takes the plain name; otherwise both tasks write the
+// same path and whichever runs last silently wins.
+jar {
+	archiveClassifier.set('unshaded')
+	from "LICENSE"
+}
+
+shadowJar {
+	archiveClassifier.set('')
+	configurations = [project.configurations.shade]
+	relocate 'club.rainbowkitty.rkcore.common', 'club.rainbowkitty.artifacts.shaded.rkcore'
+}
+
+tasks.named('assemble') {
+	dependsOn shadowJar
+}
+
+processResources {
+	// Datagen leaves a hash cache beside its output; Loom excludes it from `jar` only, which
+	// shadowJar does not inherit, so drop it a step earlier.
+	exclude '.cache/**'
+
+	// Collect only simple, serializable project properties (e.g. values from gradle.properties)
+	// to avoid fingerprinting errors from complex Gradle objects.
+	def resourceProps = [:]
+	project.properties.each { k, v ->
+		if (v instanceof CharSequence || v instanceof Number || v instanceof Boolean) {
+			resourceProps[k.toString()] = v.toString()
+		}
+	}
+
+	// Ensure core identifiers are present and coerced to String
+	resourceProps.version = project.version.toString()
+	resourceProps.group = project.group.toString()
+	resourceProps.name = project.name.toString()
+
+	// Track these inputs for incremental builds
+	inputs.properties(resourceProps)
+
+	// Provide both flat props and a nested 'project' map for ${project.*} references
+	def expandMap = resourceProps + [project: resourceProps]
+
+	filesMatching("fabric.mod.json") {
+		expand(expandMap)
+	}
+}
+
+// Loom reads the un-expanded template at configure time, so validate the generated file instead.
+tasks.register('validateFabricModJson') {
+	group = 'verification'
+	description = 'Validate that the generated build/resources/main/fabric.mod.json is valid JSON.'
+
+	doLast {
+		def jsonFile = file("${buildDir}/resources/main/fabric.mod.json")
+		if (!jsonFile.exists()) {
+			throw new GradleException("fabric.mod.json not found at: ${jsonFile}. Ensure resources are processed.")
+		}
+		try {
+			new groovy.json.JsonSlurper().parse(jsonFile)
+			logger.lifecycle("fabric.mod.json is valid JSON: ${jsonFile}")
+		} catch (Exception e) {
+			throw new GradleException("fabric.mod.json is not valid JSON: ${e.message}", e)
+		}
+	}
+}
+
+tasks.named('processResources') {
+	finalizedBy tasks.named('validateFabricModJson')
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.encoding = "UTF-8"
+	options.release = 25
+}
+
+java {
+	withSourcesJar()
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+
+	repositories {
+		// uncomment to publish to the local maven
+		// mavenLocal()
+	}
+}

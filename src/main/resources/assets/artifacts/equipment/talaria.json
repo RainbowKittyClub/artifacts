@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "artifacts:talaria"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "artifacts:talaria"
+      }
+    ]
+  }
+}
