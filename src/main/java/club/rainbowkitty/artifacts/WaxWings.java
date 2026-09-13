@@ -25,6 +25,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.player.Abilities;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemLore;
@@ -85,6 +86,12 @@ import club.rainbowkitty.rkcore.common.item.PolymerModelItem;
  * obstruction one — "flew too close to the sun" wouldn't fit), purely so the death message reads as
  * Icarus, same as an unequip mid-air — that bookkeeping has nothing to do with whether the fall
  * itself hurts.
+ *
+ * <p>{@link #updateFlyingSpeed} sets {@link Abilities#setFlyingSpeed} to
+ * {@link #FLYING_SPEED_MULTIPLIER} of vanilla's own default, further cut to
+ * {@link #RAIN_FLYING_SPEED_MULTIPLIER} of that while {@link #isRainingOn} the player, every tick
+ * so a storm rolling in or clearing mid-flight takes effect immediately. {@link #resetFlyingSpeed}
+ * restores vanilla's value on unequip, since nothing else ever would.
  */
 public final class WaxWings {
     private static final Identifier ID = Identifier.fromNamespaceAndPath(Main.MOD_ID, "wax_wings");
@@ -124,6 +131,14 @@ public final class WaxWings {
     // these players, or it would undo checkObstruction's own cutoff one tick later -- only
     // checkObstruction's own next check, once it finds them clear, restores it.
     private static final Set<UUID> OBSTRUCTED = new HashSet<>();
+
+    // Read off a fresh Abilities rather than hardcoding vanilla's 0.05F, so a future vanilla change
+    // to the default can't silently drift out of sync with a duplicated literal here.
+    private static final float VANILLA_FLYING_SPEED = new Abilities().getFlyingSpeed();
+
+    private static final float FLYING_SPEED_MULTIPLIER = 0.85F;
+    private static final float RAIN_FLYING_SPEED_MULTIPLIER = 0.5F;
+
     private WaxWings() {
     }
 
@@ -263,6 +278,41 @@ public final class WaxWings {
         FALLING.put(uuid, 0);
     }
 
+    // Recomputed every tick, since rain comes and goes while still airborne. Only touches the
+    // ability when the value actually changes, same care as checkObstruction. Skips creative and
+    // spectator for the same reason PlayerFlight does: that flight is the gamemode's own, not the
+    // wings', and isn't this effect's to slow down. Skips a grounded wearer too: the value only
+    // matters once flying, so there's nothing to recompute until then.
+    private static void updateFlyingSpeed(ServerPlayer player) {
+        if (player.isCreative() || player.isSpectator() || !player.getAbilities().flying) {
+            return;
+        }
+        float speed = VANILLA_FLYING_SPEED * FLYING_SPEED_MULTIPLIER
+                * (isRainingOn(player) ? RAIN_FLYING_SPEED_MULTIPLIER : 1F);
+        if (player.getAbilities().getFlyingSpeed() != speed) {
+            player.getAbilities().setFlyingSpeed(speed);
+            player.onUpdateAbilities();
+        }
+    }
+
+    // Mirrors Entity's own private isInRain(): rained on at either the feet or the head, so
+    // standing under a roof during a storm doesn't count.
+    private static boolean isRainingOn(ServerPlayer player) {
+        ServerLevel level = player.level();
+        BlockPos pos = player.blockPosition();
+        return level.isRainingAt(pos)
+                || level.isRainingAt(BlockPos.containing(pos.getX(), player.getBoundingBox().maxY,
+                        pos.getZ()));
+    }
+
+    // Vanilla never resets this on its own once something has changed it, so leaving the wings off
+    // without this would leave a later, unrelated flight source (creative mode, another mod) slow.
+    private static void resetFlyingSpeed(ServerPlayer player) {
+        if (player.getAbilities().getFlyingSpeed() != VANILLA_FLYING_SPEED) {
+            player.getAbilities().setFlyingSpeed(VANILLA_FLYING_SPEED);
+            player.onUpdateAbilities();
+        }
+    }
 
     // Runs every tick, unlike checkAltitude, since it has to catch a mid-air catch on the exact
     // tick it happens. Only Icarus-message eligibility is at stake here now -- the mixin's own
@@ -319,6 +369,7 @@ public final class WaxWings {
             }
             checkObstruction(player);
             checkAltitude(player);
+            updateFlyingSpeed(player);
             resolveCatch(player);
         }
 
@@ -326,6 +377,7 @@ public final class WaxWings {
         public void onDeactivate(ServerPlayer player) {
             PlayerFlight.revoke(player);
             OBSTRUCTED.remove(player.getUUID());
+            resetFlyingSpeed(player);
             if (!player.onGround()) {
                 FALLING.put(player.getUUID(), 0);
             }
