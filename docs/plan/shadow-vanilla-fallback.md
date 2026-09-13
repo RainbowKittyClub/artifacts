@@ -109,7 +109,7 @@ Vanilla items (e.g. `Items.SHEARS`, also in the tag) cannot receive this treatme
 model lives in the base game's own data, not this mod's pack, and this mod has no
 vanilla-item-model-override mechanism today.
 
-The mechanism itself now lives in `rkcore` — `common/enchant/HiddenItemModelFallback` and
+The mechanism itself now lives in `kalic0re` — `common/enchant/HiddenItemModelFallback` and
 `common/enchant/datagen/HiddenItemModelProvider`, wired in via
 `EnchantDatagen.addHiddenItemModelProvider` (`enchant-framework.md` S8, done) — so this stage is
 Java-free on this mod's side: declare one `HiddenItemModelFallback` per `Talaria`/`WaxWings`-style
@@ -133,8 +133,8 @@ what a modded client sees, not a strictly worse version of the same one. Whether
 reads as a feature or a bug to a player switching between the two client types is a product call,
 not something this research resolves — flagged rather than assumed.
 
-**Whether this belongs in `rkcore`'s `common/enchant` instead of staying artifacts-only — decided,
-folded in.** Moved to `rkcore` as `enchant-framework.md` S8: `HiddenItemModelFallback` +
+**Whether this belongs in `kalic0re`'s `common/enchant` instead of staying artifacts-only — decided,
+folded in.** Moved to `kalic0re` as `enchant-framework.md` S8: `HiddenItemModelFallback` +
 `HiddenItemModelProvider`, wired via `EnchantDatagen.addHiddenItemModelProvider`. Build and lint pass
-in `rkcore` and it has been published to `mavenLocal`; `artifacts` does not consume it yet (see S1
+in `kalic0re` and it has been published to `mavenLocal`; `artifacts` does not consume it yet (see S1
 above for the `build.gradle` prerequisite that's still outstanding).
