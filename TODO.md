@@ -9,13 +9,13 @@
      `humanoid_baby` layer, so a set without it renders babies untextured.
    - `textures/entity/equipment/wings/wax_wings.png` — 64x32, elytra layout.
 
-2. **Shadow is unwired.** The enchantment, its datagen and the three client mixins are all still in
-   the tree but disconnected (`Main` does not call `Shadow.init()`, `ArtifactsDataGenerator` does
-   not emit the enchantment json, `mixins.json` lists no client mixins, and `fabric.mod.json` has no
-   client entrypoint). Its whole payoff is client-side rendering, and the server it deploys to is
-   played on vanilla clients. Rewiring it needs either a server-side approach or an accepted
-   client-mod requirement.
+2. **Shadow is wired but unverified in-world.** `Main` calls `Shadow.init()`, datagen emits the
+   enchantment json and `shadow_enchantable` tag, and `mixins.json`/`fabric.mod.json` register the
+   three client mixins and `ClientMain`. Its payoff is still purely client-side rendering — a
+   vanilla client never sees the hidden model, only a client running this mod's jar does — see
+   `docs/plan/shadow-vanilla-fallback.md` for the resource-pack-only fallback that was scoped for
+   held tools/weapons but not built.
 
 3. **In-world verification.** Build, datagen, lint and dedicated-server boot are all green, but
-   flight, the speed bonus, the equipped-armor textures and the Icarus death message can only be
-   confirmed from a connected client.
+   flight, the speed bonus, the equipped-armor textures, the Icarus death message and Shadow's
+   hidden-model rendering can only be confirmed from a connected client.
