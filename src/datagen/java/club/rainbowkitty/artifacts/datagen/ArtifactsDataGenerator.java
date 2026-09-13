@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
 import club.rainbowkitty.artifacts.Shadow;
-import club.rainbowkitty.rkcore.common.enchant.datagen.EnchantDatagen;
+import club.rainbowkitty.kalic0re.common.enchant.datagen.EnchantDatagen;
 
 /** Datagen entrypoint: item enchantability tags, enchantment json/tag, and lang. */
 public final class ArtifactsDataGenerator implements DataGeneratorEntrypoint {

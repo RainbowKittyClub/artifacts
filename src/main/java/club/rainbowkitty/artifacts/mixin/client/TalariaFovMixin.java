@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import club.rainbowkitty.artifacts.Talaria;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectAttributes;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectAttributes;
 
 /**
  * {@code AbstractClientPlayer#getFieldOfViewModifier} reads the raw, already-synced

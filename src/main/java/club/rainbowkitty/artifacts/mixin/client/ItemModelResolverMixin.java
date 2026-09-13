@@ -12,12 +12,12 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import club.rainbowkitty.rkcore.common.enchant.HiddenEquipmentStyle;
-import club.rainbowkitty.rkcore.common.enchant.client.HiddenItemRendering;
+import club.rainbowkitty.kalic0re.common.enchant.HiddenEquipmentStyle;
+import club.rainbowkitty.kalic0re.common.enchant.client.HiddenItemRendering;
 
 /**
- * Rewrites a just-resolved item's layers onto rkcore's hidden render types when the stack carries a
- * hide-model enchantment. {@code updateForTopItem} is the one place that both holds the
+ * Rewrites a just-resolved item's layers onto kalic0re's hidden render types when the stack
+ * carries a hide-model enchantment. {@code updateForTopItem} is the one place that both holds the
  * {@link ItemStack} and has finished populating the {@link ItemStackRenderState}, which is what
  * makes it the hook: by the time {@code ItemFeatureRenderer} draws, the stack is long gone and only
  * the quads remain, so the decision has to be baked into the quads here.

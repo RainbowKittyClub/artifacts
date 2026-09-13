@@ -35,17 +35,17 @@ import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 
-import club.rainbowkitty.rkcore.common.death.DeathMessageOverrides;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffect;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectDispatcher;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectHooks;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectSource;
-import club.rainbowkitty.rkcore.common.effect.PlayerFlight;
-import club.rainbowkitty.rkcore.common.item.ItemRegistration;
-import club.rainbowkitty.rkcore.common.item.PolymerModelItem;
+import club.rainbowkitty.kalic0re.common.death.DeathMessageOverrides;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffect;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectDispatcher;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectHooks;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectSource;
+import club.rainbowkitty.kalic0re.common.effect.PlayerFlight;
+import club.rainbowkitty.kalic0re.common.item.ItemRegistration;
+import club.rainbowkitty.kalic0re.common.item.PolymerModelItem;
 
 /**
- * A chestplate granting creative-like flight while worn, through rkcore's {@code common/effect}
+ * A chestplate granting creative-like flight while worn, through kalic0re's {@code common/effect}
  * framework and its {@link PlayerFlight} helper — the grant holds only while
  * {@link PlayerEffectDispatcher} sees the wings equipped, and is released the tick they come off.
  *
@@ -56,7 +56,7 @@ import club.rainbowkitty.rkcore.common.item.PolymerModelItem;
  * has held for {@link #LANDING_GRACE_TICKS} in a row — a single grounded tick isn't enough, since
  * that is also the tick a fatal landing itself reports {@code onGround}) or regain flight (cleared
  * in {@link Hooks#onActivate}); dying to fall damage in between gets the themed
- * {@code death.attack.artifacts.icarus} message via rkcore's {@code common/death} registry, since
+ * {@code death.attack.artifacts.icarus} message via kalic0re's {@code common/death} registry, since
  * the actual redirect mixin can't be shared code — see {@code mixin/DeathMessageMixin}.
  *
  * <p>{@link #checkObstruction} runs every tick, regardless of whether the player is currently

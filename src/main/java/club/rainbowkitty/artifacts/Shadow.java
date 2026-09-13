@@ -10,9 +10,9 @@ import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-import club.rainbowkitty.rkcore.common.enchant.EnchantSpec;
-import club.rainbowkitty.rkcore.common.enchant.HiddenEquipmentStyle;
-import club.rainbowkitty.rkcore.common.enchant.HideEquipmentModelEnchantments;
+import club.rainbowkitty.kalic0re.common.enchant.EnchantSpec;
+import club.rainbowkitty.kalic0re.common.enchant.HiddenEquipmentStyle;
+import club.rainbowkitty.kalic0re.common.enchant.HideEquipmentModelEnchantments;
 
 /**
  * A purely cosmetic enchantment for armor, tools and weapons: the item it is on renders

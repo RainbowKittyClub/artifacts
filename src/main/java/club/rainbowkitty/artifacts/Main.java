@@ -5,7 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectDispatcher;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectDispatcher;
 
 /** Mod entrypoint; registers every artifact's item and effect. */
 public class Main implements ModInitializer {

@@ -20,16 +20,16 @@ import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 import net.minecraft.world.item.equipment.Equippable;
 
-import club.rainbowkitty.rkcore.common.effect.PlayerEffect;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectAttributes;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectDispatcher;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectHooks;
-import club.rainbowkitty.rkcore.common.effect.PlayerEffectSource;
-import club.rainbowkitty.rkcore.common.item.ItemRegistration;
-import club.rainbowkitty.rkcore.common.item.PolymerModelItem;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffect;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectAttributes;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectDispatcher;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectHooks;
+import club.rainbowkitty.kalic0re.common.effect.PlayerEffectSource;
+import club.rainbowkitty.kalic0re.common.item.ItemRegistration;
+import club.rainbowkitty.kalic0re.common.item.PolymerModelItem;
 
 /**
- * Hermes' winged sandals: +35% movement speed while worn, through rkcore's {@code common/effect}
+ * Hermes' winged sandals: +35% movement speed while worn, through kalic0re's {@code common/effect}
  * framework rather than a plain {@code ItemAttributeModifiers} component — the boost applies only
  * while {@link PlayerEffectDispatcher} sees them equipped, and is removed the tick they come off.
  *

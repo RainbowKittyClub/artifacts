@@ -27,7 +27,8 @@ fabricApi {
 }
 
 repositories {
-	// rkcore is not published anywhere public; it comes from `publishToMavenLocal` in its checkout.
+	// kalic0re is not published anywhere public; it comes from `publishToMavenLocal` in its
+	// checkout.
 	mavenLocal()
 	maven {
 		name = 'Nucleoid'
@@ -36,21 +37,21 @@ repositories {
 }
 
 configurations {
-	rkcore
+	kalic0re
 	shade
 	implementation.extendsFrom shade
 }
 
-// Filter rkcore down to the shareable packages before shadowJar sees it, so its own feature
+// Filter kalic0re down to the shareable packages before shadowJar sees it, so its own feature
 // packages can never leak in and importing one fails to compile.
-tasks.register('rkcoreSharedJar', Jar) {
-	archiveBaseName = 'rkcore-shared'
+tasks.register('kalic0reSharedJar', Jar) {
+	archiveBaseName = 'kalic0re-shared'
 	destinationDirectory = layout.buildDirectory.dir('shade')
-	from({ configurations.rkcore.collect { zipTree(it) } }) {
-		include 'club/rainbowkitty/rkcore/common/item/**'
-		include 'club/rainbowkitty/rkcore/common/effect/**'
-		include 'club/rainbowkitty/rkcore/common/enchant/**'
-		include 'club/rainbowkitty/rkcore/common/death/**'
+	from({ configurations.kalic0re.collect { zipTree(it) } }) {
+		include 'club/rainbowkitty/kalic0re/common/item/**'
+		include 'club/rainbowkitty/kalic0re/common/effect/**'
+		include 'club/rainbowkitty/kalic0re/common/enchant/**'
+		include 'club/rainbowkitty/kalic0re/common/death/**'
 	}
 }
 
@@ -60,11 +61,13 @@ dependencies {
 	implementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	implementation "eu.pb4:polymer-bundled:${project.polymer_version}"
-	// Non-transitive: rkcore's POM lists all of fabric-api and Polymer, which this mod declares
+	// Non-transitive: kalic0re's POM lists all of fabric-api and Polymer, which this mod declares
 	// itself. Its common/item + common/effect helpers are shaded in (relocated) rather than
 	// depended on, so the mod still installs standalone. See companions/build.gradle.
-	rkcore("club.rainbowkitty.rkcore:rkcore:${project.rkcore_version}") { transitive = false }
-	shade files(tasks.named('rkcoreSharedJar'))
+	kalic0re("club.rainbowkitty.kalic0re:kalic0re:${project.kalic0re_version}") {
+		transitive = false
+	}
+	shade files(tasks.named('kalic0reSharedJar'))
 }
 
 // runServer/stopServer lifecycle, sane-defaults seeding of run/, and the optional Quilt run — all
@@ -82,7 +85,7 @@ jar {
 shadowJar {
 	archiveClassifier.set('')
 	configurations = [project.configurations.shade]
-	relocate 'club.rainbowkitty.rkcore.common', 'club.rainbowkitty.artifacts.shaded.rkcore'
+	relocate 'club.rainbowkitty.kalic0re.common', 'club.rainbowkitty.artifacts.shaded.kalic0re'
 }
 
 tasks.named('assemble') {

@@ -19,10 +19,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 
-import club.rainbowkitty.rkcore.common.enchant.client.HiddenEquipmentRendering;
+import club.rainbowkitty.kalic0re.common.enchant.client.HiddenEquipmentRendering;
 
 /**
- * Hands every render decision inside {@code EquipmentLayerRenderer#renderLayers} to rkcore's
+ * Hands every render decision inside {@code EquipmentLayerRenderer#renderLayers} to kalic0re's
  * {@link HiddenEquipmentRendering}, which knows how each {@code HiddenEquipmentStyle} wants a
  * flagged stack drawn. This class holds only the two hook points, since mixins are never shared
  * code. {@code EquipmentLayerRenderer} is the one choke point every vanilla armor-wearing entity

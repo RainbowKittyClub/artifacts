@@ -8,11 +8,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 
-import club.rainbowkitty.rkcore.common.death.DeathMessageOverrides;
+import club.rainbowkitty.kalic0re.common.death.DeathMessageOverrides;
 
 /**
  * Routes the single {@code CombatTracker.getDeathMessage()} call inside {@code ServerPlayer#die} —
- * the one spot that builds both the kill-packet text and the broadcast text — through rkcore's
+ * the one spot that builds both the kill-packet text and the broadcast text — through kalic0re's
  * {@code common/death} registry, so a registered override (see {@code WaxWings}) can replace it
  * before either is sent.
  *
