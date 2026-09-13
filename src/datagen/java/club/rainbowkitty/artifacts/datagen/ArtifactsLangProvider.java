@@ -21,6 +21,7 @@ public final class ArtifactsLangProvider extends FabricLanguageProvider {
     public void generateTranslations(HolderLookup.Provider registries, TranslationBuilder builder) {
         builder.add(Talaria.ITEM, "Talaria");
         builder.add(WaxWings.ITEM, "Wax Wings");
+        builder.add("enchantment.artifacts.shadow", "Shadow");
         builder.add("death.attack.artifacts.icarus", "%1$s flew too close to the sun");
     }
 }
