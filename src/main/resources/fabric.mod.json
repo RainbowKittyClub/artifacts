@@ -19,6 +19,9 @@
     "main": [
       "${project.entrypoint}"
     ],
+    "client": [
+      "club.rainbowkitty.artifacts.ClientMain"
+    ],
     "fabric-datagen": [
       "club.rainbowkitty.artifacts.datagen.ArtifactsDataGenerator"
     ]

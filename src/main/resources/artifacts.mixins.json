@@ -8,6 +8,9 @@
     "OverheightFallDamageMixin"
   ],
   "client": [
+    "client.EquipmentLayerRendererMixin",
+    "client.ItemModelResolverMixin",
+    "client.ItemStackRenderStateAccessor",
     "client.TalariaFovMixin"
   ],
   "injectors": {

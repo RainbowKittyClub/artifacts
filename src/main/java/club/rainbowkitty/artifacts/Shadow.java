@@ -15,13 +15,7 @@ import club.rainbowkitty.rkcore.common.enchant.HiddenEquipmentStyle;
 import club.rainbowkitty.rkcore.common.enchant.HideEquipmentModelEnchantments;
 
 /**
- * Currently unwired: {@link Main} does not call {@link #init}, {@code ArtifactsDataGenerator} does
- * not generate its enchantment json, and {@code mixins.json} lists no client mixins. The effect is
- * visible only to a client running this mod, and the server it is deployed to is played on vanilla
- * clients, so it waits here until there is a server-side implementation. Everything below describes
- * how it works once rewired.
- *
- * <p>A purely cosmetic enchantment for armor, tools and weapons: the item it is on renders
+ * A purely cosmetic enchantment for armor, tools and weapons: the item it is on renders
  * invisible while its enchantment glint still shows, through
  * {@link HideEquipmentModelEnchantments} and a client-side mixin on {@code EquipmentLayerRenderer}
  * (see {@code mixin/client/EquipmentLayerRendererMixin}). That mixin only covers the equipped-armor
@@ -32,6 +26,11 @@ import club.rainbowkitty.rkcore.common.enchant.HideEquipmentModelEnchantments;
  *
  * <p>Needs no {@link Enchantment.Builder#withEffect} of its own — every enchanted item already has
  * a foil regardless of whether it does anything mechanically, which is the whole trick.
+ *
+ * <p>Its payoff is entirely client-side rendering: only a client running this mod's mixins sees the
+ * hidden model, and a vanilla client sees a plain enchanted item. See
+ * {@code docs/plan/shadow-vanilla-fallback.md} for why a resource-pack-only substitute can't cover
+ * worn armor, and where it can for a held tool or weapon.
  */
 public final class Shadow {
     public static final ResourceKey<Enchantment> KEY = ResourceKey.create(Registries.ENCHANTMENT,

@@ -7,13 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import club.rainbowkitty.rkcore.common.effect.PlayerEffectDispatcher;
 
-/**
- * Mod entrypoint; registers every artifact's item and effect.
- *
- * <p>{@link Shadow} is deliberately not wired up — it is the one feature whose payoff is purely
- * client-side rendering, so it stays out of server deploys until it has an implementation that
- * works for a vanilla client.
- */
+/** Mod entrypoint; registers every artifact's item and effect. */
 public class Main implements ModInitializer {
     public static final String MOD_ID = "artifacts";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -22,6 +16,7 @@ public class Main implements ModInitializer {
     public void onInitialize() {
         Talaria.init();
         WaxWings.init();
+        Shadow.init();
         ArtifactsLoot.init();
         PlayerEffectDispatcher.init();
 
