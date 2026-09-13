@@ -4,7 +4,8 @@
   "package": "club.rainbowkitty.artifacts.mixin",
   "compatibilityLevel": "JAVA_25",
   "mixins": [
-    "DeathMessageMixin"
+    "DeathMessageMixin",
+    "OverheightFallDamageMixin"
   ],
   "client": [],
   "injectors": {
