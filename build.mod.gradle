@@ -1,0 +1,11 @@
+// artifacts-specific build logic. Applied last by the shared gradle/build.gradle, so it can
+// reconfigure anything that file set up.
+
+loom {
+	runs {
+		// Skip the offline-mode name prompt: this client only ever joins this mod's own dev server.
+		client {
+			programArgs '--username', 'TestPlayer'
+		}
+	}
+}
