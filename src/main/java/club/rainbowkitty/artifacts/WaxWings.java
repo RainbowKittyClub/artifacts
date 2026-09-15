@@ -60,8 +60,8 @@ import club.rainbowkitty.kalic0re.common.item.PolymerModelItem;
  * the actual redirect mixin can't be shared code — see {@code mixin/DeathMessageMixin}.
  *
  * <p>{@link #checkObstruction} runs every tick, regardless of whether the player is currently
- * flying: whenever any part of their own volume overlaps a block that isn't air — water, lava, a
- * cobweb, sweet berry bush foliage, anything — both {@code flying} and {@code mayfly} are withheld
+ * flying: whenever they're in any liquid, on fire, or any part of their own volume overlaps a
+ * cobweb or sweet berry bush foliage, both {@code flying} and {@code mayfly} are withheld
  * immediately (no streak — there's no measurement noise to tolerate the way altitude has), tracked
  * in {@link #OBSTRUCTED} so {@code mayfly} comes back only once a later tick finds them clear of
  * it, not the moment they physically leave it. Withholding {@code mayfly} itself, not just active
@@ -126,8 +126,8 @@ public final class WaxWings {
     // reason.
     private static final Map<UUID, Integer> OVERHEIGHT_STREAK = new HashMap<>();
 
-    // Players whose mayfly is being withheld for being obstructed (in a liquid, a cobweb, berry
-    // bush foliage, or any other non-air block). Hooks#onTick's usual "defend the grant" must skip
+    // Players whose mayfly is being withheld for being obstructed (in a liquid, on fire, a
+                // cobweb, or berry bush foliage). Hooks#onTick's usual "defend the grant" must skip
     // these players, or it would undo checkObstruction's own cutoff one tick later -- only
     // checkObstruction's own next check, once it finds them clear, restores it.
     private static final Set<UUID> OBSTRUCTED = new HashSet<>();
@@ -223,15 +223,21 @@ public final class WaxWings {
         }
     }
 
-    // True while any part of the player's own volume overlaps a block that isn't air: water, lava,
-    // a cobweb, sweet berry bush foliage, anything. Deflated the same way
-    // Entity#getFluidInteractionBox is, so standing with feet exactly on a solid floor -- whose top
-    // face touches the bounding box's own bottom face -- doesn't count as being inside it.
+    // True while the player is in any liquid (Entity#isInLiquid: water or lava) or on fire, or any
+    // part of their own volume overlaps a cobweb or sweet berry bush. The bounding-box scan is
+    // deflated the same way Entity#getFluidInteractionBox is, so standing with feet exactly on a
+    // solid floor -- whose top face touches the bounding box's own bottom face -- doesn't count as
+    // overlapping it.
     private static boolean isObstructed(ServerPlayer player) {
+        if (player.isInLiquid() || player.isOnFire()) {
+            return true;
+        }
         ServerLevel level = player.level();
         for (BlockPos pos : BlockPos.betweenClosed(
                 player.getBoundingBox().deflate(OBSTRUCTION_BOX_EPSILON))) {
-            if (!level.getBlockState(pos).isAir()) {
+            BlockState state = level.getBlockState(pos);
+            if (state.is(Blocks.COBWEB) || state.is(Blocks.SWEET_BERRY_BUSH)
+                    || state.is(Blocks.VINE)) {
                 return true;
             }
         }
