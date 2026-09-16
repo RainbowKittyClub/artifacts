@@ -36,7 +36,7 @@ public class ItemModelResolverMixin {
         if (style == null) {
             return;
         }
-        ItemStackRenderStateAccessor layers = (ItemStackRenderStateAccessor)output;
+        ItemStackRenderStateAccessor layers = (ItemStackRenderStateAccessor) output;
         int count = layers.artifacts$activeLayerCount();
         for (int i = 0; i < count; i++) {
             HiddenItemRendering.hideLayer(layers.artifacts$layers()[i], style);
