@@ -13,6 +13,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
+import club.rainbowkitty.artifacts.waxwings.WaxWings;
+
 /**
  * Seeds both artifacts into vanilla structure chests as their only obtainable source — there is no
  * recipe, so a run through the listed structures is the whole acquisition path.

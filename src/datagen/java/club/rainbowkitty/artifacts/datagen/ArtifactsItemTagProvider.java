@@ -14,7 +14,7 @@ import net.minecraft.world.item.Items;
 
 import club.rainbowkitty.artifacts.Shadow;
 import club.rainbowkitty.artifacts.Talaria;
-import club.rainbowkitty.artifacts.WaxWings;
+import club.rainbowkitty.artifacts.waxwings.WaxWings;
 
 /**
  * Puts every wearable artifact into the per-slot and general {@code enchantable/*} item tags, so

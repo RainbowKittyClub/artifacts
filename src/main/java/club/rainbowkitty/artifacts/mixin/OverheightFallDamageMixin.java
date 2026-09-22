@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
-import club.rainbowkitty.artifacts.WaxWings;
+import club.rainbowkitty.artifacts.waxwings.WaxWings;
 
 /**
  * {@code Player#causeFallDamage} returns early whenever {@code abilities.mayfly} is true, at all,

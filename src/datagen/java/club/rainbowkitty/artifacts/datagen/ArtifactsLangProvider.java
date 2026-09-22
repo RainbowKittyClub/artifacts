@@ -8,7 +8,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.core.HolderLookup;
 
 import club.rainbowkitty.artifacts.Talaria;
-import club.rainbowkitty.artifacts.WaxWings;
+import club.rainbowkitty.artifacts.waxwings.WaxWings;
 
 /** English names for every artifact item. */
 public final class ArtifactsLangProvider extends FabricLanguageProvider {
