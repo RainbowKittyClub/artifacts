@@ -24,7 +24,7 @@ final class FlightSpeed {
     // own, not the wings', and isn't this effect's to slow down. Skips a grounded wearer too: the
     // value only matters once flying, so there's nothing to recompute until then.
     static void update(ServerPlayer player) {
-        if (player.isCreative() || player.isSpectator() || !player.getAbilities().flying) {
+        if (!WaxWings.isManaged(player) || !player.getAbilities().flying) {
             return;
         }
         float speed = VANILLA_FLYING_SPEED * FLYING_SPEED_MULTIPLIER

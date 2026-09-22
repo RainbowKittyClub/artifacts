@@ -73,13 +73,25 @@ public final class WaxWings {
     /**
      * Whether {@code player}'s mayfly-driven fall immunity should NOT apply right now: wearing the
      * wings only protects a fall while they're actually using the flight it grants, not merely
-     * while worn.
+     * while worn. Creative/spectator guarded like every other check in this package -- their own
+     * mayfly isn't the wings' to withhold.
      */
     public static boolean isUnprotectedFall(ServerPlayer player) {
+        if (!isManaged(player)) {
+            return false;
+        }
         return EFFECT.source().isActive(player) && !player.getAbilities().flying;
     }
 
-    // Lore is default italic so we build all the formatting manually
+    // Whether every sibling class's flight-management logic even applies to this player:
+    // creative/spectator already fly for free, on their own terms, so none of this package's
+    // guards, cutoffs, or speed changes are the wings' business while a player is in one.
+    static boolean isManaged(ServerPlayer player) {
+        return !player.isCreative() && !player.isSpectator();
+    }
+
+    // "too" is the one italic run: ItemLore would otherwise italicise the whole line as a
+    // fallback, which would leave the emphasis with nothing to contrast against.
     private static ItemLore lore() {
         return new ItemLore(List.of(Component.literal("Don't fly ")
                 .withStyle(style -> style.withColor(ChatFormatting.GRAY).withItalic(false))

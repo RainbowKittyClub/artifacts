@@ -46,7 +46,7 @@ final class ObstructionGuard {
     // one either. Set#add/#remove's own return value gates the actual ability change to the exact
     // transition tick, instead of re-syncing abilities every tick spent stuck.
     static void check(ServerPlayer player) {
-        if (player.isCreative() || player.isSpectator()) {
+        if (!WaxWings.isManaged(player)) {
             return;
         }
         UUID uuid = player.getUUID();

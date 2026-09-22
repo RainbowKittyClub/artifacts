@@ -12,6 +12,7 @@ final class WaxWingsHooks implements PlayerEffectHooks {
     public void onActivate(ServerPlayer player) {
         PlayerFlight.grant(player);
         FallTracker.clear(player.getUUID());
+        AltitudeGuard.clear(player.getUUID());
         ObstructionGuard.clear(player.getUUID());
     }
 
@@ -40,7 +41,7 @@ final class WaxWingsHooks implements PlayerEffectHooks {
         // FlightSpeed.update (Finding 2): without it, unequipping mid-air in one of those
         // gamemodes then switching to survival while still airborne wrongly earns the Icarus
         // message on a later fall.
-        if (!player.isCreative() && !player.isSpectator() && !player.onGround()) {
+        if (WaxWings.isManaged(player) && !player.onGround()) {
             FallTracker.markFalling(player.getUUID());
         }
     }

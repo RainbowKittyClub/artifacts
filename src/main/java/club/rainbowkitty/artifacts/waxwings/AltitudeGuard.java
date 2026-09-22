@@ -39,7 +39,7 @@ final class AltitudeGuard {
     // meaningless otherwise, and an obstructed player already has flying == false from
     // ObstructionGuard, so this is naturally a no-op then.
     static void check(ServerPlayer player) {
-        if (player.isCreative() || player.isSpectator()) {
+        if (!WaxWings.isManaged(player)) {
             return;
         }
         if (player.level().getServer().getTickCount() % FLIGHT_CHECK_INTERVAL_TICKS != 0) {
