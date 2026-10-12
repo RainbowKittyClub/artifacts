@@ -45,12 +45,12 @@ public final class Talaria {
             ResourceKey.create(EquipmentAssets.ROOT_ID, ID);
 
     public static final Item ITEM = ItemRegistration.register(Main.MOD_ID, "talaria",
-            key -> new PolymerModelItem(Items.COPPER_BOOTS, ID, new Item.Properties()
-                    .setId(key)
-                    .component(DataComponents.EQUIPPABLE,
-                            Equippable.builder(EquipmentSlot.FEET).setAsset(ASSET).build())
-                    .component(DataComponents.ITEM_NAME, Component.literal("Talaria"))
-                    .component(DataComponents.LORE, lore())));
+            key -> ArtifactNames.named(key, "Talaria",
+                    new PolymerModelItem(Items.COPPER_BOOTS, ID, new Item.Properties()
+                            .setId(key)
+                            .component(DataComponents.EQUIPPABLE,
+                                    Equippable.builder(EquipmentSlot.FEET).setAsset(ASSET).build())
+                            .component(DataComponents.LORE, lore()))));
 
     public static final PlayerEffect EFFECT = new PlayerEffect(Main.MOD_ID, "talaria_speed",
             PlayerEffectSource.equipped(EquipmentSlotGroup.FEET, ITEM), new Hooks());
