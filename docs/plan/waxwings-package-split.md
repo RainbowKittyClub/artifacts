@@ -5,6 +5,10 @@ Splits the single 392-line `club.rainbowkitty.artifacts.WaxWings` class into a
 (rare, edge-case) behavior fix and one comment/doc-drift fix surfaced while reading the code
 closely (see "Findings that reshape the work").
 
+Since superseded in part: `docs/plan/orb-and-glider-wings.md` moved these classes to
+`club.rainbowkitty.artifacts.orb`, where they serve the Orb of Levitation, and made Wax Wings an
+elytra. The reference appendix below still describes the flight mechanics, under the old names.
+
 Every citation was checked directly against the pre-refactor `WaxWings.java`, its five callers,
 `scripts/lint/checkstyle.xml`, `rkc/mods/artifacts/build.gradle`, and — for the vanilla
 fall-damage and gamemode claims — the Minecraft 26.2 decompile at
