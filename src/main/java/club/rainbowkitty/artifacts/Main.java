@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import club.rainbowkitty.artifacts.orb.OrbOfLevitation;
 import club.rainbowkitty.artifacts.waxwings.WaxWings;
 import club.rainbowkitty.kalic0re.common.effect.PlayerEffectDispatcher;
 
@@ -16,13 +17,14 @@ public class Main implements ModInitializer {
     @Override
     public void onInitialize() {
         Talaria.init();
+        OrbOfLevitation.init();
         WaxWings.init();
         Shadow.init();
         ArtifactsLoot.init();
         PlayerEffectDispatcher.init();
 
         // Not markAsRequired(): every artifact declares a vanilla fallback item, so a client
-        // without the pack still sees a sensible boot/elytra rather than a missing model.
+        // without the pack still sees a sensible vanilla item rather than a missing model.
         PolymerResourcePackUtils.addModAssets(MOD_ID);
 
         LOGGER.info("Artifacts initialized!");

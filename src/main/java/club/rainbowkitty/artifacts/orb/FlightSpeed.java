@@ -1,4 +1,4 @@
-package club.rainbowkitty.artifacts.waxwings;
+package club.rainbowkitty.artifacts.orb;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Abilities;
 
 // Slows a flying wearer's speed and cuts it further in the rain, restoring vanilla's own value
-// once the wings come off.
+// once the orb is let go.
 final class FlightSpeed {
     // Read off a fresh Abilities rather than hardcoding vanilla's 0.05F, so a future vanilla
     // change to the default can't silently drift out of sync with a duplicated literal here.
@@ -19,12 +19,12 @@ final class FlightSpeed {
     }
 
     // Recomputed every tick, since rain comes and goes while still airborne. Only touches the
-    // ability when the value actually changes, same care as ObstructionGuard.check. Skips
+    // ability when the value actually changes, same care as LiquidGuard.check. Skips
     // creative and spectator for the same reason PlayerFlight does: that flight is the gamemode's
-    // own, not the wings', and isn't this effect's to slow down. Skips a grounded wearer too: the
+    // own, not the orb's, and isn't this effect's to slow down. Skips a grounded wearer too: the
     // value only matters once flying, so there's nothing to recompute until then.
     static void update(ServerPlayer player) {
-        if (!WaxWings.isManaged(player) || !player.getAbilities().flying) {
+        if (!OrbOfLevitation.isManaged(player) || !player.getAbilities().flying) {
             return;
         }
         float speed = VANILLA_FLYING_SPEED * FLYING_SPEED_MULTIPLIER
@@ -35,8 +35,8 @@ final class FlightSpeed {
         }
     }
 
-    // Vanilla never resets this on its own once something has changed it, so leaving the wings
-    // off without this would leave a later, unrelated flight source (creative mode, another mod)
+    // Vanilla never resets this on its own once something has changed it, so letting go of the
+    // orb without this would leave a later, unrelated flight source (creative mode, another mod)
     // slow.
     static void reset(ServerPlayer player) {
         if (player.getAbilities().getFlyingSpeed() != VANILLA_FLYING_SPEED) {

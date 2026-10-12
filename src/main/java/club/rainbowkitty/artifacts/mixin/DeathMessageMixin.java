@@ -13,8 +13,8 @@ import club.rainbowkitty.kalic0re.common.death.DeathMessageOverrides;
 /**
  * Routes the single {@code CombatTracker.getDeathMessage()} call inside {@code ServerPlayer#die} —
  * the one spot that builds both the kill-packet text and the broadcast text — through kalic0re's
- * {@code common/death} registry, so a registered override (see {@code WaxWings}) can replace it
- * before either is sent.
+ * {@code common/death} registry, so a registered override (see {@code OrbOfLevitation} and
+ * {@code WaxWings}) can replace it before either is sent.
  *
  * <p>{@link ModifyExpressionValue}, not {@code @Redirect}, and that is not a style preference. Only
  * one {@code @Redirect} may claim a given call site: a second mod redirecting the same call gets

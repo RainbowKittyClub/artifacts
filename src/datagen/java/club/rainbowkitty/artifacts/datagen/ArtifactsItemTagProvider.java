@@ -17,9 +17,10 @@ import club.rainbowkitty.artifacts.Talaria;
 import club.rainbowkitty.artifacts.waxwings.WaxWings;
 
 /**
- * Puts every wearable artifact into the per-slot and general {@code enchantable/*} item tags, so
- * vanilla armor enchantments can actually target them at the enchanting table, and populates
- * {@link Shadow#SUPPORTED_ITEMS}.
+ * Puts every wearable artifact into the {@code enchantable/*} item tags its vanilla counterpart is
+ * in, so vanilla enchantments apply to them from a book at an anvil, and populates
+ * {@link Shadow#SUPPORTED_ITEMS}. None has an {@code ENCHANTABLE} component, so the enchanting
+ * table refuses them, the same as it refuses an elytra.
  */
 public final class ArtifactsItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
     public ArtifactsItemTagProvider(FabricPackOutput output,
@@ -32,9 +33,12 @@ public final class ArtifactsItemTagProvider extends FabricTagsProvider.ItemTagsP
         ResourceKey<Item> talaria = key(Talaria.ITEM);
         ResourceKey<Item> waxWings = key(WaxWings.ITEM);
 
-        tag(ItemTags.ARMOR_ENCHANTABLE).add(talaria, waxWings);
+        tag(ItemTags.ARMOR_ENCHANTABLE).add(talaria);
         tag(ItemTags.FOOT_ARMOR_ENCHANTABLE).add(talaria);
-        tag(ItemTags.CHEST_ARMOR_ENCHANTABLE).add(waxWings);
+
+        // The elytra's own two, and nothing armor-shaped: vanishing already includes durability.
+        tag(ItemTags.DURABILITY_ENCHANTABLE).add(waxWings);
+        tag(ItemTags.EQUIPPABLE_ENCHANTABLE).add(waxWings);
 
         // addOptionalTag, not addTag: this run's own registries snapshot predates the base game's
         // vanilla-shipped item tags the same way EnchantTagProvider's does for enchantments (see

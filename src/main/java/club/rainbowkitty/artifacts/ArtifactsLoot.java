@@ -13,10 +13,11 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
+import club.rainbowkitty.artifacts.orb.OrbOfLevitation;
 import club.rainbowkitty.artifacts.waxwings.WaxWings;
 
 /**
- * Seeds both artifacts into vanilla structure chests as their only obtainable source — there is no
+ * Seeds every artifact into vanilla structure chests as their only obtainable source — there is no
  * recipe, so a run through the listed structures is the whole acquisition path.
  *
  * <p>Each item gets its own one-roll pool gated on a {@value #CHANCE} random chance, added to a
@@ -46,6 +47,13 @@ public final class ArtifactsLoot {
             BuiltInLootTables.ANCIENT_CITY,
             BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS_UNIQUE);
 
+    // An orb to ponder: libraries, spellcasters, and the shulkers levitation comes from.
+    private static final Set<ResourceKey<LootTable>> ORB_CHESTS = Set.of(
+            BuiltInLootTables.STRONGHOLD_LIBRARY,
+            BuiltInLootTables.WOODLAND_MANSION,
+            BuiltInLootTables.END_CITY_TREASURE,
+            BuiltInLootTables.ANCIENT_CITY);
+
     private ArtifactsLoot() {
     }
 
@@ -57,6 +65,9 @@ public final class ArtifactsLoot {
             }
             if (WAX_WINGS_CHESTS.contains(key)) {
                 table.withPool(rarePool(WaxWings.ITEM));
+            }
+            if (ORB_CHESTS.contains(key)) {
+                table.withPool(rarePool(OrbOfLevitation.ITEM));
             }
         });
     }

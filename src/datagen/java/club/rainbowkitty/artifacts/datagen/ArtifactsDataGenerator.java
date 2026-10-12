@@ -15,6 +15,7 @@ public final class ArtifactsDataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = generator.createPack();
         pack.addProvider(ArtifactsItemTagProvider::new);
         pack.addProvider(ArtifactsLangProvider::new);
+        pack.addProvider(ArtifactsRecipeProvider::new);
         EnchantDatagen.addProviders(pack, List.of(Shadow.SPEC));
     }
 }
