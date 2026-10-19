@@ -1,0 +1,13 @@
+// Datagen writes per version, into its node's own versions/<v>/src/main/generated. Stonecutter also
+// maps the shared tree's src/main/generated into each node, where a single-version run's leftover
+// output would ship beside the node's own or clash with it, so drop that mapping.
+if (project != rootProject) {
+	afterEvaluate {
+		def resources = sourceSets.main.resources
+		def shared = [rootProject.file('src/main/generated'),
+				layout.buildDirectory.dir('generated/stonecutter/main/generated').get().asFile]
+		// Keep the tasks behind the remaining dirs (stonecutterGenerate), which plain Files drop.
+		def builders = resources.sourceDirectories.buildDependencies.getDependencies(null)
+		resources.srcDirs = [files(resources.srcDirs - shared).builtBy(builders)]
+	}
+}
