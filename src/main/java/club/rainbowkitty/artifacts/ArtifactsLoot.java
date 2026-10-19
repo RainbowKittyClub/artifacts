@@ -11,7 +11,11 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+//? if >=26.3 {
+/*import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+*///?} else {
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+//?}
 
 import club.rainbowkitty.artifacts.orb.OrbOfLevitation;
 import club.rainbowkitty.artifacts.waxwings.WaxWings;
@@ -75,8 +79,13 @@ public final class ArtifactsLoot {
     // The condition sits on the pool, not the entry, so a failed roll yields nothing at all rather
     // than falling through to some other entry in the same pool.
     private static LootPool.Builder rarePool(Item item) {
+        // 26.3 split number providers into int and float ones; rolls take an int.
         return LootPool.lootPool()
+                //? if >=26.3 {
+                /*.setRolls(ContextIntProviders.exactly(1))
+                *///?} else {
                 .setRolls(ConstantValue.exactly(1.0F))
+                //?}
                 .when(LootItemRandomChanceCondition.randomChance(CHANCE))
                 .add(LootItem.lootTableItem(item));
     }

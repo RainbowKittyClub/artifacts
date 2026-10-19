@@ -11,3 +11,35 @@ if (project != rootProject) {
 		resources.srcDirs = [files(resources.srcDirs - shared).builtBy(builders)]
 	}
 }
+
+// Each version ships its own mixin config, since 26.3's lacks Shadow's client mixins. Fail when one
+// names a class this version compiles away, or misses a mixin class it does compile.
+def checkMixinConfig = tasks.register('checkMixinConfig') {
+	group = 'verification'
+	description = 'Checks the mixin config lists exactly the mixin classes this version compiles.'
+	def config = layout.buildDirectory.file("resources/main/${project.mod_id}.mixins.json")
+	def classes = sourceSets.main.java.classesDirectory
+	dependsOn tasks.named('processResources'), tasks.named('compileJava')
+	inputs.file(config)
+	inputs.dir(classes)
+	doLast {
+		def json = new groovy.json.JsonSlurper().parse(config.get().asFile)
+		def listed = ((json.mixins ?: []) + (json.client ?: []) + (json.server ?: [])) as Set
+		def root = classes.get().asFile.toPath().resolve(json.package.replace('.', '/'))
+		def compiled = [] as Set
+		root.toFile().eachFileRecurse(groovy.io.FileType.FILES) {
+			if (it.name.endsWith('.class') && !it.name.contains('$')) {
+				def name = root.relativize(it.toPath()).toString().replace(File.separator, '.')
+				compiled << name - ~/\.class$/
+			}
+		}
+		if (listed != compiled) {
+			throw new GradleException("${config.get().asFile.name}: listed but not compiled " +
+					"${listed - compiled}, compiled but not listed ${compiled - listed}")
+		}
+	}
+}
+
+tasks.named('classes') {
+	dependsOn checkMixinConfig
+}

@@ -1,3 +1,5 @@
+// Serves only kalic0re's hidden-model renderers, which have no 26.3 port.
+//? if <26.3 {
 package net.minecraft.client.renderer.rendertype;
 
 import net.fabricmc.api.EnvType;
@@ -22,3 +24,4 @@ public final class ArtifactsRenderTypeFactory {
         return RenderType.create(name, setup);
     }
 }
+//?}

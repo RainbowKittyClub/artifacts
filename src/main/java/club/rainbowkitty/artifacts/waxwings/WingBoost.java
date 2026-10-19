@@ -9,6 +9,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+//? if >=26.3
+//import net.minecraft.world.item.component.SwingAnimation;
 
 // The boost a right-click on BoostCatcher buys: what a firework rocket does when used mid-glide
 // (FireworkRocketItem.use), paid for in cooldown and durability instead of a rocket.
@@ -36,7 +38,12 @@ final class WingBoost {
         level.addFreshEntity(
                 new FireworkRocketEntity(level, new ItemStack(Items.FIREWORK_ROCKET), player));
         // The client's own interaction with the catcher returns CONSUME, which does not swing.
+        // 26.3 swings take an animation; an empty hand's is the default.
+        //? if >=26.3 {
+        /*player.swing(InteractionHand.MAIN_HAND, SwingAnimation.DEFAULT, true);
+        *///?} else {
         player.swing(InteractionHand.MAIN_HAND, true);
+        //?}
         player.getCooldowns().addCooldown(wings, COOLDOWN_TICKS);
         WaxMelt.wear(player, wings, WEAR * WaxMelt.multiplier(player));
     }

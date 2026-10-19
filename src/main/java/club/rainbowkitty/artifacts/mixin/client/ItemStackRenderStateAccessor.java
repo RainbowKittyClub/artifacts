@@ -1,3 +1,5 @@
+// Serves only ItemModelResolverMixin, which is 26.2-only like this.
+//? if <26.3 {
 package club.rainbowkitty.artifacts.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,3 +22,4 @@ public interface ItemStackRenderStateAccessor {
     @Accessor("activeLayerCount")
     int artifacts$activeLayerCount();
 }
+//?}

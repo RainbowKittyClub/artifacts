@@ -5,12 +5,17 @@ import java.util.concurrent.CompletableFuture;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 
+//? if >=26.3
+//import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
+//? if <26.3
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+//? if >=26.3
+//import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.CookingBookCategory;
@@ -33,10 +38,17 @@ public final class ArtifactsRecipeProvider extends FabricRecipeProvider {
         super(output, registriesFuture);
     }
 
+    // 26.3 builds recipes into registry bootstrap contexts rather than a RecipeOutput.
     @Override
+    //? if >=26.3 {
+    /*protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries,
+            BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
+        return new RecipeProvider(recipes, advancements) {
+    *///?} else {
     protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries,
             RecipeOutput output) {
         return new RecipeProvider(registries, output) {
+    //?}
             @Override
             public void buildRecipes() {
                 Ingredient wet = Ingredient.of(OrbOfLevitation.WATERLOGGED_ITEM);

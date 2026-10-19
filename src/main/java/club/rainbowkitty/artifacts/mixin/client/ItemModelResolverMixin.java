@@ -1,3 +1,5 @@
+// 26.3 has no port of kalic0re's hidden-model renderers, so only 26.2's mixin config lists this.
+//? if <26.3 {
 package club.rainbowkitty.artifacts.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -43,3 +45,4 @@ public class ItemModelResolverMixin {
         }
     }
 }
+//?}

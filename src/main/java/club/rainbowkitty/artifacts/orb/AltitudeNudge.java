@@ -203,9 +203,14 @@ final class AltitudeNudge {
     // Sends the nudge as a blast's knockback, the only part of the packet the client acts on here.
     private static void send(ServerPlayer player, double push) {
         Vec3 blast = player.position().subtract(0.0, BLAST_DEPTH, 0.0);
+        // 26.3 added a play-sound flag to the packet.
         player.connection.send(new ClientboundExplodePacket(blast, 0.0F, 0,
                 Optional.of(new Vec3(0.0, push, 0.0)), ParticleTypes.SMOKE, SILENT,
+                //? if >=26.3 {
+                /*WeightedList.of(), false));
+                *///?} else {
                 WeightedList.of()));
+                //?}
     }
 
     // The highest the box top may be, the lowest its bottom may be, and the floor over the
