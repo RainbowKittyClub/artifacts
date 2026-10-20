@@ -19,7 +19,7 @@ import net.minecraft.world.phys.Vec3;
 // An invisible Interaction entity, shown only to its owner, kept around their eye while they glide
 // empty-handed. A vanilla client sends nothing for an empty-hand right-click into air, but it picks
 // an entity whose box holds the eye ahead of anything else, so the click arrives here as an
-// interact instead. See docs/plan/orb-and-glider-wings.md, Finding 1.
+// interact instead. See rkc/docs/artifacts/plan/orb-and-glider-wings.md, Finding 1.
 final class BoostCatcher {
     private static final float SIZE = 4.0F;
     private static final double MILLIS_PER_TICK = 50.0;

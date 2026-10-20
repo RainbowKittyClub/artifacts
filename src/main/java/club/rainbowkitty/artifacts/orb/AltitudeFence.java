@@ -20,7 +20,7 @@ import net.minecraft.world.phys.Vec3;
 // (OrbGameRules) of the ground: a ceiling over their head. A ledge that would put them higher is
 // left open, and AltitudeNudge flies them down it; only the void's edge, where there is nothing
 // to come down to, is walled. The server's own world is never touched; see
-// docs/plan/orb-and-glider-wings.md, S3, S9, S12 and S13.
+// rkc/docs/artifacts/plan/orb-and-glider-wings.md, S3, S9, S12 and S13.
 final class AltitudeFence {
     private static final int LOOKAHEAD_TICKS = 4;
     private static final double MAX_LOOKAHEAD_BLOCKS = 12.0;

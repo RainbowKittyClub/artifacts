@@ -29,8 +29,8 @@ import club.rainbowkitty.kalic0re.common.enchant.HideEquipmentModelEnchantments;
  *
  * <p>Its payoff is entirely client-side rendering: only a client running this mod's mixins sees the
  * hidden model, and a vanilla client sees a plain enchanted item. See
- * {@code docs/plan/shadow-vanilla-fallback.md} for why a resource-pack-only substitute can't cover
- * worn armor, and where it can for a held tool or weapon.
+ * {@code rkc/docs/artifacts/plan/shadow-vanilla-fallback.md} for why a resource-pack-only
+ * substitute can't cover worn armor, and where it can for a held tool or weapon.
  */
 public final class Shadow {
     public static final ResourceKey<Enchantment> KEY = ResourceKey.create(Registries.ENCHANTMENT,

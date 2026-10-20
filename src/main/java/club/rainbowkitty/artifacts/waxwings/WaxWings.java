@@ -41,7 +41,8 @@ import club.rainbowkitty.kalic0re.common.item.PolymerModelItem;
  *
  * <p>Clients without the server's resource pack see {@link Items#ELYTRA}, and glide on it off the
  * components Polymer copies across; art is still placeholder. See
- * {@code docs/plan/orb-and-glider-wings.md} for how the boost reaches a vanilla client.
+ * {@code rkc/docs/artifacts/plan/orb-and-glider-wings.md} for how the boost reaches a vanilla
+ * client.
  */
 public final class WaxWings {
     private static final Identifier ID = Identifier.fromNamespaceAndPath(Main.MOD_ID, "wax_wings");
