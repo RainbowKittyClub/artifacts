@@ -10,7 +10,7 @@ This file covers only where this mod departs from it.
 
 - **Multi-version build** (Stonecutter): 26.2 and 26.3, with 26.2 committed. Each version's keys
   are in `versions/<v>/gradle.properties`.
-  - 26.2 keeps the live pins: kalic0re 0.21.0, Polymer 0.17.3, Fabric API 0.159.0.
+  - 26.2 builds against kalic0re 0.31.0+26.2, Polymer 0.17.3 and Fabric API 0.159.0.
   - 26.3 builds against kalic0re 0.31.0+26.3, Polymer 0.18.4 and Fabric API 0.161.0.
   - Dev servers are on ports 25606/25583 (26.2) and 25820/25822 (26.3).
 - **26.3 ports**, each a `//?` block:
@@ -31,8 +31,13 @@ This file covers only where this mod departs from it.
     `versions/<v>/src/main/resources/artifacts.mixins.json`. Add a new mixin to both.
   - `checkMixinConfig`, which `classes` runs, fails a version whose config and compiled mixin
     classes disagree.
-- **`mavenLocal()` dependency.** kalic0re's `item`, `effect`, `enchant`, `death` and `click`
-  packages are relocated into the jar from `club.rainbowkitty.kalic0re:kalic0re:<kalic0re_version>`
-  in `~/.m2`. A stale or missing copy shows up as a compile error naming a kalic0re class.
+- **kalic0re** `item`, `effect`, `enchant`, `death` and `click` are relocated into the jar from
+  `club.rainbowkitty.kalic0re:kalic0re:<kalic0re_version>`, taken from `~/.m2` first, then from
+  kalic0re's GitHub Packages. A stale or missing copy shows up as a compile error naming a kalic0re
+  class.
+- **Releases** — a pushed `v<mod_version>` tag publishes every version's jar to this repo's GitHub
+  Packages (`publish-maven.yml`) and makes a GitHub release with the jars (`release.yml`); nothing
+  goes to Modrinth or CurseForge. A clean CI runner needs each pinned kalic0re version published to
+  kalic0re's GitHub Packages, and the private Kalic0re package to grant this repo read access.
 - **The jar to install** is `artifacts-<version>+<v>.jar` for the server's version. `-unshaded` and
   `-sources` beside it are not.
