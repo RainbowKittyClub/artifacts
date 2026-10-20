@@ -14,11 +14,11 @@
    enchantment json and `shadow_enchantable` tag, and `mixins.json`/`fabric.mod.json` register the
    three client mixins and `ClientMain`. Its payoff is still purely client-side rendering — a
    vanilla client never sees the hidden model, only a client running this mod's jar does — see
-   `docs/plan/shadow-vanilla-fallback.md` for the resource-pack-only fallback that was scoped for
+   `rkc/docs/artifacts/plan/shadow-vanilla-fallback.md` for the resource-pack-only fallback that was scoped for
    held tools/weapons but not built.
 
 3. **In-world verification.** Build, datagen, lint and dedicated-server boot are all green, but
    the orb's flight and barrier fence, the wings' glide, melt and empty-hand boost, the speed
    bonus, the equipped-armor textures, both themed death messages and Shadow's hidden-model
    rendering can only be confirmed from a connected client. The staged checklist for the orb and
-   the wings is each stage's "Done when" in `docs/plan/orb-and-glider-wings.md`.
+   the wings is each stage's "Done when" in `rkc/docs/artifacts/plan/orb-and-glider-wings.md`.
