@@ -34,8 +34,9 @@ import club.rainbowkitty.kalic0re.common.item.PolymerModelItem;
  * resource pack see {@link Items#HEART_OF_THE_SEA}; art is still placeholder.
  *
  * <p>Flight is bounded by the sibling classes in this package, each a single concern — see
- * {@code docs/plan/waxwings-package-split.md}'s "Reference: Flight tracking mechanics" for how they
- * interact, and {@code docs/plan/orb-and-glider-wings.md} for how they came to hold an orb.
+ * {@code rkc/docs/artifacts/plan/waxwings-package-split.md}'s "Reference: Flight tracking
+ * mechanics" for how they interact, and {@code rkc/docs/artifacts/plan/orb-and-glider-wings.md}
+ * for how they came to hold an orb.
  */
 public final class OrbOfLevitation {
     private static final Identifier ID =
