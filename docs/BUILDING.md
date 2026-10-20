@@ -38,6 +38,6 @@ This file covers only where this mod departs from it.
 - **Releases** — a pushed `v<mod_version>` tag publishes every version's jar to this repo's GitHub
   Packages (`publish-maven.yml`) and makes a GitHub release with the jars (`release.yml`); nothing
   goes to Modrinth or CurseForge. A clean CI runner needs each pinned kalic0re version published to
-  kalic0re's GitHub Packages, and the private Kalic0re package to grant this repo read access.
+  kalic0re's public GitHub Packages.
 - **The jar to install** is `artifacts-<version>+<v>.jar` for the server's version. `-unshaded` and
   `-sources` beside it are not.
