@@ -12,7 +12,8 @@ This file covers only where this mod departs from it.
   are in `versions/<v>/gradle.properties`.
   - 26.2 builds against kalic0re 0.31.0+26.2, Polymer 0.17.3 and Fabric API 0.159.0.
   - 26.3 builds against kalic0re 0.31.0+26.3, Polymer 0.18.4 and Fabric API 0.161.0.
-  - Dev servers are on ports 25606/25583 (26.2) and 25820/25822 (26.3).
+  - Each dev server run takes the first two free ports in `dev_server_ports` and writes them to
+    its version's `run/server.properties`.
 - **26.3 ports**, each a `//?` block:
   - loot pools roll an int provider (`ArtifactsLoot`);
   - the explode packet takes a play-sound flag (`AltitudeNudge`);
